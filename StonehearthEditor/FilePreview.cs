@@ -309,7 +309,7 @@ namespace StonehearthEditor
             textBox.Styles[Style.Default].Size = 10;
             textBox.Styles[Style.Default].ForeColor = Color.Black;
             textBox.StyleClearAll();
-
+                       
             // Based on the extension, we need to choose the right lexer/style
             switch (System.IO.Path.GetExtension(mFileData.Path))
             {
@@ -615,6 +615,20 @@ namespace StonehearthEditor
             {
                 parentControl.Text = mFileData.FileName;
             }
+        }
+
+        private void textBox_InsertCheck(object sender, InsertCheckEventArgs e)
+        {
+            var text = e.Text;
+
+            // Replace tabs with 3 whitespaces
+            text = text.Replace("\t", "   ");
+            var x = this.textBox.Lines.Select(l => l.Indentation).ToList();
+
+            // TODO: Handle newlines and indention here somehow? Or can Indentation do that?
+
+            // Return the modified text.
+            e.Text = text;
         }
     }
 }
